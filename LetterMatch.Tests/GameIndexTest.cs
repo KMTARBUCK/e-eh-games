@@ -52,10 +52,41 @@ public class GameIndexTest
         firstMissingLetter.Click();
         Assert.IsTrue(firstIncompleteWord.Selected);
         Assert.IsTrue(firstMissingLetter.Selected);
-        // IWebElement playButton = driver.FindElement(By.Id("play"));
-        // playButton.Click();
-        // string currentUrl = driver.Url;
-        // Assert.AreEqual("http://127.0.0.1:5112/game", currentUrl);
     }
+
+    // MATCHING WORDS
+    // Navigate to Game index
+    // Find elements by class -> ICollection
+    // Find elements by label 'for='happy'' or by innerHtml -> IWebElement
+    // Click each button
+    // Find play button -> IWebElement
+    // Click play button
+    // Assert that currenturl == http://127.0.0.1:5112/game?result=correct
+
+    [Test]
+    public void GameIndex_ClickMatchingPair_RedirectToCorrectResultPage()
+    {
+        driver.Navigate().GoToUrl("http://127.0.0.1:5112/game"); 
+        ICollection<IWebElement> incompleteWords = driver.FindElements(By.ClassName("incompleteWord"));
+        IWebElement firstIncompleteWord = incompleteWords.First().FindElement(By.Id("radio2"));
+  
+
+
+        // ICollection<IWebElement> missingLetters = driver.FindElements(By.ClassName("missingLetters"));
+        // // IWebElement firstMissingLetter = missingLetters.First();
+        // firstIncompleteWord.Click();
+        // firstMissingLetter.Click();
+        // Assert.IsTrue(firstIncompleteWord.Selected);
+        // Assert.IsTrue(firstMissingLetter.Selected);
+    }
+
+     // NON-MATCHING WORDS
+    // Navigate to Game index
+    // Find elements by class -> ICollection
+    // Find elements by label 'for='happy'' or by innerHtml -> IWebElement
+    // Click each button
+    // Find play button -> IWebElement
+    // Click play button
+    // Assert that currenturl == http://127.0.0.1:5112/game?result=incorrect
 
 }
