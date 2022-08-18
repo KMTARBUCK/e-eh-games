@@ -67,17 +67,14 @@ public class GameIndexTest
     public void GameIndex_ClickMatchingPair_RedirectToCorrectResultPage()
     {
         driver.Navigate().GoToUrl("http://127.0.0.1:5112/game"); 
-        ICollection<IWebElement> incompleteWords = driver.FindElements(By.ClassName("incompleteWord"));
-        IWebElement firstIncompleteWord = incompleteWords.First().FindElement(By.Id("radio2"));
-  
-
-
-        // ICollection<IWebElement> missingLetters = driver.FindElements(By.ClassName("missingLetters"));
-        // // IWebElement firstMissingLetter = missingLetters.First();
-        // firstIncompleteWord.Click();
-        // firstMissingLetter.Click();
-        // Assert.IsTrue(firstIncompleteWord.Selected);
-        // Assert.IsTrue(firstMissingLetter.Selected);
+        IWebElement incompleteWord = driver.FindElement(By.Id("radio1"));
+        IWebElement missingLetter = driver.FindElement(By.Id("radio3"));
+        incompleteWord.Click();
+        missingLetter.Click();
+        IWebElement playButton = driver.FindElement(By.Id("play"));
+        playButton.Click();
+        string currentUrl = driver.Url;
+        Assert.AreEqual("http://127.0.0.1:5112/game?result=correct", currentUrl);
     }
 
      // NON-MATCHING WORDS
@@ -88,5 +85,19 @@ public class GameIndexTest
     // Find play button -> IWebElement
     // Click play button
     // Assert that currenturl == http://127.0.0.1:5112/game?result=incorrect
+
+    [Test]
+        public void GameIndex_ClickUnmatchingPair_RedirectToIncorrectResultPage()
+        {
+            driver.Navigate().GoToUrl("http://127.0.0.1:5112/game"); 
+            IWebElement incompleteWord = driver.FindElement(By.Id("radio1"));
+            IWebElement missingLetter = driver.FindElement(By.Id("radio4"));
+            incompleteWord.Click();
+            missingLetter.Click();
+            IWebElement playButton = driver.FindElement(By.Id("play"));
+            playButton.Click();
+            string currentUrl = driver.Url;
+            Assert.AreEqual("http://127.0.0.1:5112/game?result=incorrect", currentUrl);
+        }
 
 }
