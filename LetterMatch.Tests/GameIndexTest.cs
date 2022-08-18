@@ -32,7 +32,7 @@ public class GameIndexTest
     public void GameIndex_ClickTwoButtons_DeselectsFirst()
     {
         driver.Navigate().GoToUrl("http://127.0.0.1:5112/game"); 
-        ICollection<IWebElement> incompleteWords = driver.FindElements(By.Name("incompleteWord"));
+        ICollection<IWebElement> incompleteWords = driver.FindElements(By.ClassName("incompleteWord"));
         IWebElement firstIncompleteWord = incompleteWords.First();
         IWebElement lastIncompleteWord = incompleteWords.Last();
         firstIncompleteWord.Click();
@@ -40,12 +40,13 @@ public class GameIndexTest
         Assert.IsFalse(firstIncompleteWord.Selected);
     }
 
+    [Test]
     public void GameIndex_ClickTwoButtons_BothSelected()
     {
         driver.Navigate().GoToUrl("http://127.0.0.1:5112/game"); 
-        ICollection<IWebElement> incompleteWords = driver.FindElements(By.Name("incompleteWord"));
+        ICollection<IWebElement> incompleteWords = driver.FindElements(By.ClassName("incompleteWord"));
         IWebElement firstIncompleteWord = incompleteWords.First();
-        ICollection<IWebElement> missingLetters = driver.FindElements(By.Name("missingLetters"));
+        ICollection<IWebElement> missingLetters = driver.FindElements(By.ClassName("missingLetters"));
         IWebElement firstMissingLetter = missingLetters.First();
         firstIncompleteWord.Click();
         firstMissingLetter.Click();
