@@ -26,9 +26,9 @@ public class GameController : Controller
         //switch(WordChecker.check(value1, value2))
         //{
         //case true:
-        //return new RedirectResult("/game?word=correct")
+        //return new RedirectResult("/game?result=correct")
         //case false:
-        //return new RedirectResult("/game?word=incorrect")
+        //return new RedirectResult("/game?result=incorrect")
         //}
 
         /*Side-note: we could try returning the View directly instead of
