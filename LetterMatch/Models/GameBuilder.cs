@@ -10,15 +10,14 @@ public class GameBuilder
     this.index1 = 1;
     this.index2 = 3;
     this.word = word;
-    Setup(this.word);
   }
 
-  public WordCombo Setup(string word)
+  public WordCombo Setup()
   {
     WordCombo wordPair = new WordCombo();
-    wordPair.FullWord = word;
-    wordPair.MissingLetters = GetLetters(word);
-    wordPair.IncompleteWord = Split(word);
+    wordPair.FullWord = this.word;
+    wordPair.MissingLetters = GetLetters(this.word);
+    wordPair.IncompleteWord = Split(this.word);
     wordPair.Status = "incomplete";
     return wordPair;
   }

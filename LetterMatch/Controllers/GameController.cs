@@ -16,6 +16,19 @@ public class GameController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+        GameBuilder newWord = new GameBuilder("world");
+        WordCombo wordCombo1 = newWord.Setup();
+        /* Add wordCombo1 to an array, then just repeat
+        (we can refactor this code later, just to prevent
+        having to repeat every time we want a new word).
+        
+        Then add the array to the ViewBag, from which we
+        can loop through them in the view and create buttons.
+        
+        Two buttons will be needed per wordCombo - one for
+        the MissingLetters and one for the Incomplete Word, both
+        of which should have the same value (which you can set
+        to "comboname".FullWord). */
         return View();
     }
 
