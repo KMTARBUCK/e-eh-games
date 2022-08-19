@@ -21,17 +21,30 @@ public class GameController : Controller
 
     [Route("/game")]
     [HttpPost]
-    public RedirectResult Create(/*string value1, string value2*/)
+    public RedirectResult Create(string incompleteWord, string missingLetters)
     {
-        //switch(WordChecker.check(value1, value2))
-        //{
-        //case true:
-        //return new RedirectResult("/game?word=correct")
-        //case false:
-        //return new RedirectResult("/game?word=incorrect")
-        //}
+        // Console.WriteLine("This is the incomplete word:");
+        // Console.WriteLine(incompleteWord);
+        // Console.WriteLine("These are the missing letters:");
+        // Console.WriteLine(missingLetters);
 
-        /*Side-note: we could try returning the View directly instead of
+        if(Validator.CheckSelection(incompleteWord, missingLetters) == false)
+        {
+            return new RedirectResult("/game?result=incompletefields");
+        }
+
+        
+        switch(WordChecker.Check(incompleteWord, missingLetters))
+        {
+            case true:
+            return new RedirectResult("/game?result=correct");
+            case false:
+            return new RedirectResult("/game?result=incorrect");
+        }        
+   
+    }
+    
+    /*Side-note: we could try returning the View directly instead of
         the RedirectResult, as we could then keep the values and be able
         to target the radio buttons we had previously selected (allowing for
         styling e.g.: turning them red if they're wrong).
@@ -40,8 +53,6 @@ public class GameController : Controller
         You could also then just throw the message (correct, incorrect) into
         the ViewBag directly.
         */
-        return new RedirectResult("/game");
-    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

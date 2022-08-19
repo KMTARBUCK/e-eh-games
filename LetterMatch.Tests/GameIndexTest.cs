@@ -25,7 +25,7 @@ public class GameIndexTest
         IWebElement playButton = driver.FindElement(By.Id("play"));
         playButton.Click();
         string currentUrl = driver.Url;
-        Assert.AreEqual("http://127.0.0.1:5112/game", currentUrl);
+        Assert.AreEqual("http://127.0.0.1:5112/game?result=incompletefields", currentUrl);
     }
 
     [Test]
@@ -52,10 +52,52 @@ public class GameIndexTest
         firstMissingLetter.Click();
         Assert.IsTrue(firstIncompleteWord.Selected);
         Assert.IsTrue(firstMissingLetter.Selected);
-        // IWebElement playButton = driver.FindElement(By.Id("play"));
-        // playButton.Click();
-        // string currentUrl = driver.Url;
-        // Assert.AreEqual("http://127.0.0.1:5112/game", currentUrl);
     }
+
+    // MATCHING WORDS
+    // Navigate to Game index
+    // Find elements by class -> ICollection
+    // Find elements by label 'for='happy'' or by innerHtml -> IWebElement
+    // Click each button
+    // Find play button -> IWebElement
+    // Click play button
+    // Assert that currenturl == http://127.0.0.1:5112/game?result=correct
+
+    [Test]
+    public void GameIndex_ClickMatchingPair_RedirectToCorrectResultPage()
+    {
+        driver.Navigate().GoToUrl("http://127.0.0.1:5112/game"); 
+        IWebElement incompleteWord = driver.FindElement(By.Id("radio1"));
+        IWebElement missingLetter = driver.FindElement(By.Id("radio3"));
+        incompleteWord.Click();
+        missingLetter.Click();
+        IWebElement playButton = driver.FindElement(By.Id("play"));
+        playButton.Click();
+        string currentUrl = driver.Url;
+        Assert.AreEqual("http://127.0.0.1:5112/game?result=correct", currentUrl);
+    }
+
+     // NON-MATCHING WORDS
+    // Navigate to Game index
+    // Find elements by class -> ICollection
+    // Find elements by label 'for='happy'' or by innerHtml -> IWebElement
+    // Click each button
+    // Find play button -> IWebElement
+    // Click play button
+    // Assert that currenturl == http://127.0.0.1:5112/game?result=incorrect
+
+    [Test]
+        public void GameIndex_ClickUnmatchingPair_RedirectToIncorrectResultPage()
+        {
+            driver.Navigate().GoToUrl("http://127.0.0.1:5112/game"); 
+            IWebElement incompleteWord = driver.FindElement(By.Id("radio1"));
+            IWebElement missingLetter = driver.FindElement(By.Id("radio4"));
+            incompleteWord.Click();
+            missingLetter.Click();
+            IWebElement playButton = driver.FindElement(By.Id("play"));
+            playButton.Click();
+            string currentUrl = driver.Url;
+            Assert.AreEqual("http://127.0.0.1:5112/game?result=incorrect", currentUrl);
+        }
 
 }
