@@ -25,7 +25,7 @@ public class GameIndexTest
         IWebElement playButton = driver.FindElement(By.Id("play"));
         playButton.Click();
         string currentUrl = driver.Url;
-        Assert.AreEqual("http://127.0.0.1:5112/game?result=incompletefields", currentUrl);
+        Assert.AreEqual("http://127.0.0.1:5112/game?result=missing", currentUrl);
     }
 
     [Test]

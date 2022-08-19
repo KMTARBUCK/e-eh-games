@@ -26,20 +26,17 @@ public class GameController : Controller
         // Console.WriteLine("This is the incomplete word:");
         // Console.WriteLine(incompleteWord);
         // Console.WriteLine("These are the missing letters:");
-        // Console.WriteLine(missingLetters);
-
-        if(Validator.CheckSelection(incompleteWord, missingLetters) == false)
-        {
-            return new RedirectResult("/game?result=incompletefields");
-        }
-
-        
+        // Console.WriteLine(missingLetters);        
         switch(WordChecker.Check(incompleteWord, missingLetters))
         {
-            case true:
+            case "missing":
+            return new RedirectResult("/game?result=missing");
+            case "correct":
             return new RedirectResult("/game?result=correct");
-            case false:
+            case "incorrect":
             return new RedirectResult("/game?result=incorrect");
+            default:
+            return new RedirectResult("/game?result=oops");
         }        
    
     }
