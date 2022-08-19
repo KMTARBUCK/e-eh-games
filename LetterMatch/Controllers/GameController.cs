@@ -28,6 +28,11 @@ public class GameController : Controller
         // Console.WriteLine("These are the missing letters:");
         // Console.WriteLine(missingLetters);
 
+        if(Validator.CheckSelection(incompleteWord, missingLetters) == false)
+        {
+            return new RedirectResult("/game?result=incompletefields");
+        }
+
         
         switch(WordChecker.Check(incompleteWord, missingLetters))
         {
@@ -35,9 +40,7 @@ public class GameController : Controller
             return new RedirectResult("/game?result=correct");
             case false:
             return new RedirectResult("/game?result=incorrect");
-        }
-            return new RedirectResult("/game");
-        
+        }        
    
     }
     
