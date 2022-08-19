@@ -10,7 +10,7 @@ public class GameBuilder
     this.index1 = 1;
     this.index2 = 3;
     this.word = word;
-    Setup(word);
+    Setup(this.word);
   }
 
   public WordCombo Setup(string word)
@@ -30,9 +30,10 @@ public class GameBuilder
   public string Split(string word)
   {
     System.Text.StringBuilder builder = new System.Text.StringBuilder();
-    foreach(char letter in word)
+    for(int i = 0; i < word.Length; i++)
     {
-      if(letter == word[this.index1] || letter == word[this.index2])
+      char letter = word[i];
+      if(i == this.index1 || i == this.index2)
       {
         builder.Append("_");
       }
