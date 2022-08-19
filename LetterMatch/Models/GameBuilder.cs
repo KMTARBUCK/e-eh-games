@@ -10,6 +10,7 @@ public class GameBuilder
     this.index1 = 1;
     this.index2 = 3;
     this.word = word;
+    Setup(word);
   }
 
   public WordCombo Setup(string word)
