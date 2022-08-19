@@ -16,9 +16,14 @@ public class GameController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        // WordSplitter newWord = new WordSplitter("hello")
+        // arrayOfWords for word in arrayOfWords
+
+        // GameBuilder newWord = new GameBuilder("hello")
         // WordCombo newCombo = newWord.SetUp() -> RETURNS an object WordCombo
-        // ViewBag newCombo
+
+        // create array of objects from the above
+        
+        // ViewBag arrayObjects
         return View();
     }
 
