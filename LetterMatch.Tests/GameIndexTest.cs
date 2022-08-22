@@ -100,4 +100,32 @@ public class GameIndexTest
             Assert.AreEqual("http://127.0.0.1:5112/game?result=incorrect", currentUrl);
         }
 
+    
+     [Test]
+    public void GameIndex_NavigateToButtons_ReturnCorrectHtml()
+    {
+        driver.Navigate().GoToUrl("http://127.0.0.1:5112/game"); 
+        IWebElement incompleteWord = driver.FindElement(By.ClassName("incompleteWord"));
+        IWebElement missingLetter = driver.FindElement(By.ClassName("missingLetters"));
+        string incompleteWordValue = incompleteWord.GetAttribute("innerHTML");
+        string missingLetterValue = missingLetter.GetAttribute("innerHTML");
+        Assert.That(incompleteWordValue, Does.Contain("H_L_O"));
+        Assert.That(missingLetterValue, Does.Contain("EL"));
+    }
+
+    // POPULATING BUTTONS 
+    // Navigate to Game index
+    // ViewBag.WordCombo = new WordCombo()
+    // Find elements by class -> ICollection
+    // Find elements by label 'for='happy'' or by innerHtml -> IWebElement
+    // Click each button
+    // Find play button -> IWebElement
+    // Click play button
+    // Assert that currenturl == http://127.0.0.1:5112/game?result=incorrect
+
+    // MAYBE (PROBABLY NOT)
+    // Create hidden form in home index play button to parse a word into
+    // Use that word in the WordSplitter method
+    // Game view displays split word and missing letters as buttons
+    // Those buttons match when pressing play game button
 }
