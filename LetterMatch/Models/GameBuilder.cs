@@ -4,22 +4,37 @@ public class GameBuilder
 {
    int index1;
    int index2;
-   string word;
-  public GameBuilder(string word)
+   string[] wordArray = new string[5];
+  //  WordCombo[] objectArray = new WordCombo[5];
+
+  public GameBuilder(string[] wordArray)
   {
     this.index1 = 1;
     this.index2 = 3;
-    this.word = word;
+    this.wordArray = wordArray;
+    // this.objectArray = objectArray;
   }
-
+// pass in an array of words, return an array of object
+// create a db columns for id, level, words (array), date?
+// Adapt method to take array of strings. Return an array of objects
+// Add viewbags to controller. Iterate through on index pa 
   public WordCombo Setup()
+  
   {
-    WordCombo wordPair = new WordCombo();
-    wordPair.FullWord = this.word;
-    wordPair.MissingLetters = GetLetters(this.word);
-    wordPair.IncompleteWord = Split(this.word);
-    wordPair.Status = "incomplete";
-    return wordPair;
+    WordCombo[] objectArray = new WordCombo[5];
+
+    foreach (string word in this.wordArray)
+    {
+      //array of wordpair instances
+      WordCombo wordPair = new WordCombo();
+      wordPair.FullWord = word;
+      wordPair.MissingLetters = GetLetters(word);
+      wordPair.IncompleteWord = Split(word);
+      wordPair.Status = "incomplete";
+      objectArray = objectArray.Append(wordPair).ToArray();
+    }
+
+    return objectArray;
   }
 
   public string GetLetters(string word)
