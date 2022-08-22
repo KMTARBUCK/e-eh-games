@@ -35,11 +35,7 @@ public class GameController : Controller
     [Route("/game")]
     [HttpPost]
     public RedirectResult Create(string incompleteWord, string missingLetters)
-    {
-        // Console.WriteLine("This is the incomplete word:");
-        // Console.WriteLine(incompleteWord);
-        // Console.WriteLine("These are the missing letters:");
-        // Console.WriteLine(missingLetters);        
+    {      
         switch(WordChecker.Check(incompleteWord, missingLetters))
         {
             case "missing":

@@ -26,6 +26,7 @@ public class GameBuilder
   {
     return word[this.index1].ToString() + word[this.index2].ToString();
   }
+  
   public string Split(string word)
   {
     System.Text.StringBuilder builder = new System.Text.StringBuilder();

@@ -10,7 +10,7 @@ public class WordCheckerTest
     [TestCase("dictionary", "dictionary")]
     public void CheckTwoMatchingValues_ReturnTrueIfMatching(string word1, string word2)
     {
-        Assert.AreEqual(true, WordChecker.Check(word1, word2));
+        Assert.AreEqual("correct", WordChecker.Check(word1, word2));
     }
     [Test]
     [TestCase("MAKERS", "MAKER")]
@@ -19,6 +19,6 @@ public class WordCheckerTest
     [TestCase("dictionary", "thesaurus")]
     public void CheckTwoMatchingValues_ReturnFalseIfNotMatching(string word1, string word2)
     {
-        Assert.AreEqual(false, WordChecker.Check(word1, word2));
+        Assert.AreEqual("incorrect", WordChecker.Check(word1, word2));
     }
 }
