@@ -16,6 +16,14 @@ public class GameController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+        // arrayOfWords for word in arrayOfWords
+
+        // GameBuilder newWord = new GameBuilder("hello")
+        // WordCombo newCombo = newWord.SetUp() -> RETURNS an object WordCombo
+
+        // create array of objects from the above
+        
+        // ViewBag arrayObjects
         return View();
     }
 
