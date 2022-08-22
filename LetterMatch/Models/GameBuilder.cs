@@ -18,7 +18,7 @@ public class GameBuilder
 // create a db columns for id, level, words (array), date?
 // Adapt method to take array of strings. Return an array of objects
 // Add viewbags to controller. Iterate through on index pa 
-  public WordCombo Setup()
+  public WordCombo[] Setup()
   
   {
     // WordCombo[] objectArray = new WordCombo[5];
@@ -32,9 +32,6 @@ public class GameBuilder
       wordPair.Status = "incomplete";
       objectArray = objectArray.Append(wordPair).ToArray();
     }
-
-
-
     return objectArray;
 
 // List<Subject> allDestek = new List<Subject>() {
