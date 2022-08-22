@@ -21,11 +21,10 @@ public class GameBuilder
   public WordCombo Setup()
   
   {
-    WordCombo[] objectArray = new WordCombo[5];
+    // WordCombo[] objectArray = new WordCombo[5];
 
     foreach (string word in this.wordArray)
     {
-      //array of wordpair instances
       WordCombo wordPair = new WordCombo();
       wordPair.FullWord = word;
       wordPair.MissingLetters = GetLetters(word);
@@ -34,7 +33,20 @@ public class GameBuilder
       objectArray = objectArray.Append(wordPair).ToArray();
     }
 
+
+
     return objectArray;
+
+// List<Subject> allDestek = new List<Subject>() {
+//    new Subject(){ ID = 1, Name = "aaaa"},
+//    new Subject(){ ID = 2, Name = "bbbb"},
+//    new Subject(){ ID = 2, Name = "cccc"},
+//    new Subject(){ ID = 2, Name = "dddd"}
+//  };
+
+//  allSubject.ToArray()
+
+
   }
 
   public string GetLetters(string word)
