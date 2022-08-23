@@ -4,22 +4,24 @@ public class GameBuilder
 {
    int index1;
    int index2;
-   string word;
-  public GameBuilder(string word)
-  {
-    this.index1 = 1;
-    this.index2 = 3;
-    this.word = word;
-  }
+   Random rnd = new Random();
 
-  public WordCombo Setup()
+  public WordCombo[] Setup(string[] wordArray)
   {
-    WordCombo wordPair = new WordCombo();
-    wordPair.FullWord = this.word;
-    wordPair.MissingLetters = GetLetters(this.word);
-    wordPair.IncompleteWord = Split(this.word);
-    wordPair.Status = "incomplete";
-    return wordPair;
+    List<WordCombo> wordList = new List<WordCombo>();
+    foreach(string word in wordArray){
+      //if word is present in CompletedWords list
+      this.index1 = 1;
+      this.index2 = 3; //rnd.Next(0,4)
+      WordCombo wordPair = new WordCombo();
+      wordPair.FullWord = word.ToUpper();
+      wordPair.MissingLetters = GetLetters(word.ToUpper());
+      wordPair.IncompleteWord = Split(word.ToUpper());
+      wordPair.Status = "incomplete";
+      wordList.Add(wordPair);
+    }
+    WordCombo[] wordComboArray = wordList.ToArray();
+    return wordComboArray;
   }
 
   public string GetLetters(string word)

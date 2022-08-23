@@ -1,35 +1,28 @@
 <h1 class="title">T U R D L E</h1>
 
-
-@* <div class="main"> *@
 <div>
-  @* </div> *@
   
   <form action="/game" method="post">
 
-  <div class="btn btn-dark">
-    <input class="incompleteWord" type="radio" id="radio1" name="incompleteWord" value="happy">
-    <label for="happy">_AP_Y</label>
-  </div>
+  @foreach(WordCombo combo in ViewBag.wordCombos)
+  {
+    <div class="btn btn-dark">
+      <input class="incompleteWord" type="radio" id="radio1" name="incompleteWord" value="@combo.FullWord">
+      <label for="incompleteWord">@combo.IncompleteWord</label>
+    </div>
+    <br>
 
-  
-  <div class="btn btn-dark">
-    <input class="incompleteWord" type="radio" id="radio2" name="incompleteWord" value="ghost">
-    <label for="ghost">G_O_T</label>
-  </div>
+  }  
+  @foreach(WordCombo combo in ViewBag.wordCombos)
+  {
+    <div class="btn btn-dark">
+      <input class="missingLetters" type="radio" id="radio2" name="missingLetters" value="@combo.FullWord">
+      <label for="missingLetters">@combo.MissingLetters</label>
+    </div>
+    <br>
 
-  
-  <div class="btn btn-dark">
-    <input class="missingLetters" type="radio" id="radio3"  name="missingLetters" value="happy">
-    <label for="happy">HP</label>
-  </div>
-
-  
-  <div class="btn btn-dark">
-    <input class="missingLetters" type="radio" id="radio4"  name="missingLetters" value="ghost">
-    <label for="ghost">HS</label>
-  </div>
-  
+  }  
+  <br>
   <input type="submit" id="play" value="PLAY"/>
   </form>
 </div>
