@@ -11,17 +11,33 @@ public class GameBuilder
     List<WordCombo> wordList = new List<WordCombo>();
     foreach(string word in wordArray){
       //if word is present in CompletedWords list
-      this.index1 = 1;
-      this.index2 = 3; //rnd.Next(0,4)
+      SetIndexes(word);
+      string upperCaseWord = word.ToUpper();
       WordCombo wordPair = new WordCombo();
-      wordPair.FullWord = word.ToUpper();
-      wordPair.MissingLetters = GetLetters(word.ToUpper());
-      wordPair.IncompleteWord = Split(word.ToUpper());
+      wordPair.FullWord = upperCaseWord;
+      wordPair.MissingLetters = GetLetters(upperCaseWord);
+      wordPair.IncompleteWord = Split(upperCaseWord);
       wordPair.Status = "incomplete";
       wordList.Add(wordPair);
     }
     WordCombo[] wordComboArray = wordList.ToArray();
     return wordComboArray;
+  }
+
+  public void SetIndexes(string word)
+  {
+    List<int> usedIndexes = new List<int>();
+    this.index1 = rnd.Next(0, word.Length-1); //3
+    usedIndexes.Add(index1); //usedIndexes now contains 3
+    this.index2 = rnd.Next(0, word.Length-1); //3
+    if (usedIndexes.Contains(this.index2)) //true
+    {
+      while(usedIndexes.Contains(this.index2))
+      {
+        this.index2 = rnd.Next(0, word.Length-1);
+      }
+      usedIndexes.Add(index2);
+    }
   }
 
   public string GetLetters(string word)
