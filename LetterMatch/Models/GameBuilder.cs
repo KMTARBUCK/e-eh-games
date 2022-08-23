@@ -4,46 +4,24 @@ public class GameBuilder
 {
    int index1;
    int index2;
-   string[] wordArray = new string[5];
-  //  WordCombo[] objectArray = new WordCombo[5];
+   Random rnd = new Random();
 
-  public GameBuilder(string[] wordArray)
+  public WordCombo[] Setup(string[] wordArray)
   {
-    this.index1 = 1;
-    this.index2 = 3;
-    this.wordArray = wordArray;
-    // this.objectArray = objectArray;
-  }
-// pass in an array of words, return an array of object
-// create a db columns for id, level, words (array), date?
-// Adapt method to take array of strings. Return an array of objects
-// Add viewbags to controller. Iterate through on index pa 
-  public WordCombo[] Setup()
-  
-  {
-    // WordCombo[] objectArray = new WordCombo[5];
-
-    foreach (string word in this.wordArray)
-    {
+    List<WordCombo> wordList = new List<WordCombo>();
+    foreach(string word in wordArray){
+      //if word is present in CompletedWords list
+      this.index1 = 1;
+      this.index2 = 3; //rnd.Next(0,4)
       WordCombo wordPair = new WordCombo();
-      wordPair.FullWord = word;
-      wordPair.MissingLetters = GetLetters(word);
-      wordPair.IncompleteWord = Split(word);
+      wordPair.FullWord = word.ToUpper();
+      wordPair.MissingLetters = GetLetters(word.ToUpper());
+      wordPair.IncompleteWord = Split(word.ToUpper());
       wordPair.Status = "incomplete";
-      objectArray = objectArray.Append(wordPair).ToArray();
+      wordList.Add(wordPair);
     }
-    return objectArray;
-
-// List<Subject> allDestek = new List<Subject>() {
-//    new Subject(){ ID = 1, Name = "aaaa"},
-//    new Subject(){ ID = 2, Name = "bbbb"},
-//    new Subject(){ ID = 2, Name = "cccc"},
-//    new Subject(){ ID = 2, Name = "dddd"}
-//  };
-
-//  allSubject.ToArray()
-
-
+    WordCombo[] wordComboArray = wordList.ToArray();
+    return wordComboArray;
   }
 
   public string GetLetters(string word)
