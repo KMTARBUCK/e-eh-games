@@ -1,35 +1,30 @@
-<h1 class="title">P w o</h1>
-
+<h1 style="text-align: center;" class="title">P w o</h1>
 <h6 id="message" style="color:grey">@ViewBag.Message</h6>
 
-
-<div>
-  
-  <form action="/game" method="post">
-  @foreach(WordCombo combo in ViewBag.wordCombos)
-  {
-    <div class="btn btn-dark">
-      <input class="incompleteWord @combo.Status" type="radio" id="@combo.FullWord" name="incompleteWord" value="@combo.FullWord">
-      <label for="@combo.FullWord">@combo.IncompleteWord</label>
-    </div>
-    <br>
-
-  }
-    <div id="missingLettersList">
+<form style="display: grid; grid-template-rows: 90% 10%; height: 60vh" action="/game" method="post">
+  <div style="display: grid; grid-template-columns: 50% 50%; text-align: center;">
+    <div id="incompleteWordsList" style="display: grid; grid-template-rows: auto auto auto auto auto">
       @foreach(WordCombo combo in ViewBag.wordCombos)
       {
-        <div class="btn btn-dark">
-          <input class="missingLetters @combo.Status" type="radio" id="@combo.FullWord" name="missingLetters" value="@combo.FullWord">
-          <label for="@combo.FullWord">@combo.MissingLetters</label>
+        <div class="@combo.Status button">
+          <input class="check incompleteWord" hidden="true" type="radio" id="@combo.IncompleteWord+@combo.FullWord" name="incompleteWord" value="@combo.FullWord">
+          <label for="@combo.IncompleteWord+@combo.FullWord">@combo.IncompleteWord</label>
+        </div>
+      }
+    </div>
+    <div id="missingLettersList" style="display: grid; grid-template-rows: auto auto auto auto auto;">
+      @foreach(WordCombo combo in ViewBag.wordCombos)
+      {
+        <div class="@combo.Status button">
+          <input class="check missingLetters" hidden="true" type="radio" id="@combo.MissingLetters+@combo.FullWord" name="missingLetters" value="@combo.FullWord">
+          <label for="@combo.MissingLetters+@combo.FullWord">@combo.MissingLetters</label>
         </div>
       }
     </div> 
-    <br>
-    <input type="submit" id="play" value="PLAY"/>
-  </form>
-</div>
-
-<form action="/youwin" method="post">
+  </div>
+  <input style="margin-left: auto; margin-right: auto; width: 20%" type="submit" id="play" value="PLAY"/>
+</form>
+<form style="width: 100%; text-align: center" action="/youwin" method="post">
   <input type="submit" value="Next level!"/>
 </form>
 

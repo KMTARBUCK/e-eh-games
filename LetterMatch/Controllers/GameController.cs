@@ -1,15 +1,18 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using LetterMatch.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace LetterMatch.Controllers;
 
 public class GameController : Controller
 {
     private readonly ILogger<GameController> _logger;
-    public GameController(ILogger<GameController> logger)
+    private IMemoryCache _cache;
+    public GameController(ILogger<GameController> logger, IMemoryCache memoryCache)
     {
         _logger = logger;
+        _cache = memoryCache;
     }
     [Route("/game")]
     [HttpGet]
@@ -31,19 +34,19 @@ public class GameController : Controller
           ViewBag.Message = "Oops! Something went wrong!";
           break;
       }
-      //string[] statusArray = {"complete", "incomplete", "complete", "incomplete", "complete"};
-      //HttpContext.Session.SetString[]("wordStatuses", statusArray);
       GameBuilder newWord = new GameBuilder();
-      // string[] wordArray = {"maker", "TaSkS", "Plays", "Apply", "ReacT"};
       LetterMatchDbContext dbContext = new LetterMatchDbContext();
-      //string[] games = dbContext.Games.First(game.Words);
-      Game currentLevel = dbContext.Games.Where(level => level.Level == 2).First();
-      string[] wordArray = currentLevel.Words;
-      System.Console.WriteLine(wordArray);
+      Player currentUser = dbContext.Players.Where(player => player.Id == HttpContext.Session.GetInt32("player_id")).First();
+      Game setLevel = dbContext.Games.Where(level => level.Level == currentUser.CurrentLevel).First();
+      string[] wordArray = setLevel.Words;
       //if session exists, then don't run this:
-      WordCombo[] wordCombos = newWord.Setup(wordArray);
-      //make session     
-      ViewBag.wordCombos = wordCombos;
+      if(HttpContext.Session.GetString("status") == "requires_setup"){
+        WordCombo[] wordCombos = newWord.Setup(wordArray);
+        _cache.Set("wordComboOrder", wordCombos);
+        HttpContext.Session.SetString("status", "running");
+      }
+      ViewBag.playerName = HttpContext.Session.GetString("player");
+      ViewBag.wordCombos = _cache.Get("wordComboOrder");
       return View();
     }
 
@@ -56,6 +59,14 @@ public class GameController : Controller
             case "missing":
             return new RedirectResult("/game?result=missing");
             case "correct":
+              WordCombo[]? wordCombos = _cache.Get("wordComboOrder") as WordCombo[];
+              foreach(WordCombo combo in wordCombos){
+                if(combo.FullWord == incompleteWord)
+                {
+                  combo.Status = "correct";
+                }
+              }
+              _cache.Set("wordComboOrder", wordCombos);
             //loop through words in this.wordCombos, if word = incompleteWord, then set word.Status to "correct"
             return new RedirectResult("/game?result=correct");
             case "incorrect":
@@ -69,26 +80,35 @@ public class GameController : Controller
     [HttpPost]
     public RedirectResult YouWin()
     {
+      LetterMatchDbContext dbContext = new LetterMatchDbContext();
+      Player currentUser = dbContext.Players.Where(player => player.Id == HttpContext.Session.GetInt32("player_id")).First();
+      currentUser.CurrentLevel += 1;
+      dbContext.Update(currentUser);
+      dbContext.SaveChanges();
+      HttpContext.Session.SetString("status", "requires_setup");
       return new RedirectResult("/game");
     }
 
     [Route("/newplayer")]
     [HttpPost]
-    public RedirectResult NewPlayer()
+    public RedirectResult NewPlayer(string playerName)
     {
-      //Set up session
+      bool nameEmpty = string.IsNullOrEmpty(playerName);
+      if(nameEmpty == true)
+      {
+        return new RedirectResult("/?name=missing");
+      }
+      Player newplayer = new Player();
+      newplayer.Name = playerName;
+      newplayer.CurrentLevel = 1;
+      LetterMatchDbContext dbContext = new LetterMatchDbContext();
+      dbContext.Players.Add(newplayer);
+      dbContext.SaveChanges();
+      HttpContext.Session.SetString("player", newplayer.Name);
+      HttpContext.Session.SetInt32("player_id", newplayer.Id);
+      HttpContext.Session.SetString("status", "requires_setup");
       return new RedirectResult("/game");
     }
-    
-    /*Side-note: we could try returning the View directly instead of
-        the RedirectResult, as we could then keep the values and be able
-        to target the radio buttons we had previously selected (allowing for
-        styling e.g.: turning them red if they're wrong).
-
-        Either way works, but it would be really good if we could do this ^
-        You could also then just throw the message (correct, incorrect) into
-        the ViewBag directly.
-        */
 
 
     // [Route("/game")]

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 public class LetterMatchDbContext : DbContext
 {
     public DbSet<Game>? Games { get; set; }
+    public DbSet<Player>? Players { get; set; }
+
     public string? DbPath { get; }
 
     public string? GetDatabaseName() {

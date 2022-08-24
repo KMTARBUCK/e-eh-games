@@ -16,3 +16,23 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.button label {
+  display: inline-block; 
+  border: none; 
+  background-color: #bab8b8;
+  padding: 10px;
+  border-radius: 20px;
+  width: 120px;
+  text-align: center;
+  transition: background-color 0.1s ease;
+}
+
+.correct label {
+  background-color: green;
+  color: white;
+}
+
+.check:checked + label { 
+  background-color: #fcc968;
+}
