@@ -3,27 +3,26 @@
 <div>
   
   <form action="/game" method="post">
-
   @foreach(WordCombo combo in ViewBag.wordCombos)
   {
     <div class="btn btn-dark">
-      <input class="incompleteWord" type="radio" id="radio1" name="incompleteWord" value="@combo.FullWord">
-      <label for="incompleteWord">@combo.IncompleteWord</label>
+      <input class="incompleteWord" hidden="true" type="radio" id="@combo.FullWord" name="incompleteWord" value="@combo.FullWord">
+      <label for="@combo.FullWord">@combo.IncompleteWord</label>
     </div>
     <br>
 
   }
-  <div id="missingLettersList">
-    @foreach(WordCombo combo in ViewBag.wordCombos)
-    {
-      <div class="btn btn-dark">
-        <input class="missingLetters" type="radio" id="radio2" name="missingLetters" value="@combo.FullWord">
-        <label for="missingLetters">@combo.MissingLetters</label>
-      </div>
-    }
-  </div> 
-  <br>
-  <input type="submit" id="play" value="PLAY"/>
+    <div id="missingLettersList">
+      @foreach(WordCombo combo in ViewBag.wordCombos)
+      {
+        <div class="btn btn-dark">
+          <input class="missingLetters" hidden="true" type="radio" id="@combo.FullWord" name="missingLetters" value="@combo.FullWord">
+          <label for="@combo.FullWord">@combo.MissingLetters</label>
+        </div>
+      }
+    </div> 
+    <br>
+    <input type="submit" id="play" value="PLAY"/>
   </form>
 </div>
 
