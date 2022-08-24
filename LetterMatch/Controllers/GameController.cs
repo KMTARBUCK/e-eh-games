@@ -7,7 +7,6 @@ namespace LetterMatch.Controllers;
 public class GameController : Controller
 {
     private readonly ILogger<GameController> _logger;
-
     public GameController(ILogger<GameController> logger)
     {
         _logger = logger;
@@ -16,20 +15,20 @@ public class GameController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        GameBuilder newWord = new GameBuilder();
-        // string[] wordArray = {"maker", "TaSkS", "Plays", "Apply", "ReacT"};
-
+      //string[] statusArray = {"complete", "incomplete", "complete", "incomplete", "complete"};
+      //HttpContext.Session.SetString[]("wordStatuses", statusArray);
+      GameBuilder newWord = new GameBuilder();
+      // string[] wordArray = {"maker", "TaSkS", "Plays", "Apply", "ReacT"};
       LetterMatchDbContext dbContext = new LetterMatchDbContext();
-    //   string[] games = dbContext.Games.First(game.Words);
-        Game level1 = dbContext.Games.Where(level => level.Level == 1).First();
-        string[] wordArray = level1.Words;
-        System.Console.WriteLine(wordArray);
-
-
-
-        WordCombo[] wordCombos = newWord.Setup(wordArray);
-        ViewBag.wordCombos = wordCombos;
-        return View();
+      //string[] games = dbContext.Games.First(game.Words);
+      Game currentLevel = dbContext.Games.Where(level => level.Level == 2).First();
+      string[] wordArray = currentLevel.Words;
+      System.Console.WriteLine(wordArray);
+      //if session exists, then don't run this:
+      WordCombo[] wordCombos = newWord.Setup(wordArray);
+      //make session     
+      ViewBag.wordCombos = wordCombos;
+      return View();
     }
 
     [Route("/game")]
@@ -41,13 +40,20 @@ public class GameController : Controller
             case "missing":
             return new RedirectResult("/game?result=missing");
             case "correct":
+            //loop through words in this.wordCombos, if word = incompleteWord, then set word.Status to "correct"
             return new RedirectResult("/game?result=correct");
             case "incorrect":
             return new RedirectResult("/game?result=incorrect");
             default:
             return new RedirectResult("/game?result=oops");
         }        
-   
+    }
+
+    [Route("/youwin")]
+    [HttpPost]
+    public RedirectResult YouWin()
+    {
+      return new RedirectResult("/game");
     }
     
     /*Side-note: we could try returning the View directly instead of

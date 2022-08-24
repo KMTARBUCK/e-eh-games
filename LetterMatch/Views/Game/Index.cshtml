@@ -1,4 +1,4 @@
-<h1 class="title">T U R D L E</h1>
+<h1 class="title">P w o</h1>
 
 <div>
   
@@ -6,7 +6,7 @@
   @foreach(WordCombo combo in ViewBag.wordCombos)
   {
     <div class="btn btn-dark">
-      <input class="incompleteWord" hidden="true" type="radio" id="@combo.FullWord" name="incompleteWord" value="@combo.FullWord">
+      <input class="incompleteWord @combo.Status" type="radio" id="@combo.FullWord" name="incompleteWord" value="@combo.FullWord">
       <label for="@combo.FullWord">@combo.IncompleteWord</label>
     </div>
     <br>
@@ -16,7 +16,7 @@
       @foreach(WordCombo combo in ViewBag.wordCombos)
       {
         <div class="btn btn-dark">
-          <input class="missingLetters" hidden="true" type="radio" id="@combo.FullWord" name="missingLetters" value="@combo.FullWord">
+          <input class="missingLetters @combo.Status" type="radio" id="@combo.FullWord" name="missingLetters" value="@combo.FullWord">
           <label for="@combo.FullWord">@combo.MissingLetters</label>
         </div>
       }
@@ -25,6 +25,10 @@
     <input type="submit" id="play" value="PLAY"/>
   </form>
 </div>
+
+<form action="/youwin" method="post">
+  <input type="submit" value="Next level!"/>
+</form>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
