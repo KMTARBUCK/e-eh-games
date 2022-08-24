@@ -12,17 +12,29 @@
     </div>
     <br>
 
-  }  
-  @foreach(WordCombo combo in ViewBag.wordCombos)
-  {
-    <div class="btn btn-dark">
-      <input class="missingLetters" type="radio" id="radio2" name="missingLetters" value="@combo.FullWord">
-      <label for="missingLetters">@combo.MissingLetters</label>
-    </div>
-    <br>
-
-  }  
+  }
+  <div id="missingLettersList">
+    @foreach(WordCombo combo in ViewBag.wordCombos)
+    {
+      <div class="btn btn-dark">
+        <input class="missingLetters" type="radio" id="radio2" name="missingLetters" value="@combo.FullWord">
+        <label for="missingLetters">@combo.MissingLetters</label>
+      </div>
+    }
+  </div> 
   <br>
   <input type="submit" id="play" value="PLAY"/>
   </form>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    shuffleMissingLetters();
+  });
+  function shuffleMissingLetters() {
+    var list = document.querySelector("#missingLettersList");
+    for (var i = list.children.length; i >= 0; i--) {
+        list.appendChild(list.children[Math.random() * i | 0]);
+    }
+  }
+</script>
