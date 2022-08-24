@@ -18,6 +18,22 @@ public class GameController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+      string resultInfo = HttpContext.Request.Query["result"];
+      switch(resultInfo) 
+      {
+        case "missing":
+          ViewBag.Message = "Select a pair and click play!";
+          break;
+        case "correct":
+          ViewBag.Message = "Well done!";
+          break;
+        case "incorrect":
+          ViewBag.Message = "Try again!";
+          break;
+        case "oops":
+          ViewBag.Message = "Oops! Something went wrong!";
+          break;
+      }
       GameBuilder newWord = new GameBuilder();
       LetterMatchDbContext dbContext = new LetterMatchDbContext();
       Player currentUser = dbContext.Players.Where(player => player.Id == HttpContext.Session.GetInt32("player_id")).First();
@@ -93,6 +109,36 @@ public class GameController : Controller
       HttpContext.Session.SetString("status", "requires_setup");
       return new RedirectResult("/game");
     }
+
+
+    // [Route("/game")]
+    // [HttpGet]
+    // public IActionResult New()
+    // {
+    //   string resultInfo = HttpContext.Request.Query["result"];
+    //   switch(resultInfo) 
+    //   {
+    //     case "missing":
+    //       ViewBag.Message = "Select a pair and click play!";
+    //       break;
+    //     case "correct":
+    //       ViewBag.Message = "Well done!";
+    //       break;
+    //     case "incorrect":
+    //       ViewBag.Message = "Try again!";
+    //       break;
+    //     case "oops":
+    //       ViewBag.Message = "Oops! Something went wrong!";
+    //       break;
+    //   }
+
+    //   // ViewBag.status = WordChecker.Check(HttpContext.Session.GetString("user_id"));
+    //   return View();
+    // }
+
+
+
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

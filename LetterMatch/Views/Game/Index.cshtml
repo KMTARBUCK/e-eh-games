@@ -1,6 +1,6 @@
 <h1 style="text-align: center;" class="title">P w o</h1>
+<h6 id="message" style="color:grey">@ViewBag.Message</h6>
 
-<br>
 <form style="display: grid; grid-template-rows: 90% 10%; height: 60vh" action="/game" method="post">
   <div style="display: grid; grid-template-columns: 50% 50%; text-align: center;">
     <div id="incompleteWordsList" style="display: grid; grid-template-rows: auto auto auto auto auto">
@@ -10,8 +10,6 @@
           <input class="check incompleteWord" hidden="true" type="radio" id="@combo.IncompleteWord+@combo.FullWord" name="incompleteWord" value="@combo.FullWord">
           <label for="@combo.IncompleteWord+@combo.FullWord">@combo.IncompleteWord</label>
         </div>
-        <br>
-
       }
     </div>
     <div id="missingLettersList" style="display: grid; grid-template-rows: auto auto auto auto auto;">
