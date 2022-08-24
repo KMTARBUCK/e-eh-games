@@ -74,6 +74,35 @@ public class GameController : Controller
         the ViewBag directly.
         */
 
+
+// [Route("/signin")]
+//     [HttpGet]
+//     public IActionResult New()
+//     {
+//       string errorInfo = HttpContext.Request.Query["result"];
+//       switch(errorInfo) 
+//       {
+//         case "missing":
+//           ViewBag.Message = "Please fill in all input fields.";
+//           break;
+//         case "correct":
+//           ViewBag.Message = "Account created successfully! Sign in to access your account.";
+//           break;
+//         case "incorrect":
+//           ViewBag.Message = "An account with this email address does not exist. Please try again.";
+//           break;
+//         case "oops":
+//           ViewBag.Message = "An account with this email address does not exist. Please try again.";
+//           break;
+//       }
+//       ViewBag.Username = HttpContext.Session.GetString("username");
+//       ViewBag.status = ValidCheck.CheckStatus(HttpContext.Session.GetString("user_id"));
+//       return View();
+
+
+
+
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
