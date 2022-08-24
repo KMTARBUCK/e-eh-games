@@ -2,8 +2,10 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 id="greeting" class="display-4">Welcome</h1>
-</div>
+<form action="/game" method="post">
+    <input class="inputform" type="textfield" id="username" name="username">
+    <input class="submitbutton" type="submit" id="submit" value="PLAY GAME">
+</form>
 
+@* This button will be deleted: *@
 <a href="/game"><button type="button" id="playgame" class="btn btn-dark">PLAY GAME</button></a>

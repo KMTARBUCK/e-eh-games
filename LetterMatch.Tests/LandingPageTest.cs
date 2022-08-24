@@ -18,14 +18,6 @@ public class LandingPageTest
       driver.Quit();
     }
 
-    [Test]
-    public void HomeIndex_ViewGreeting()
-    {
-        driver.Navigate().GoToUrl("http://127.0.0.1:5112"); //investigate how we would actually find this?!
-        IWebElement greeting = driver.FindElement(By.Id("greeting"));
-        Assert.AreEqual("Welcome", greeting.GetAttribute("innerHTML"));
-    }
-
      [Test]
     public void HomeIndex_ClickPlayGame_RedirectsToGameIndex()
     {
@@ -34,5 +26,18 @@ public class LandingPageTest
         playButton.Click();
         string currentUrl = driver.Url;
         Assert.AreEqual("http://127.0.0.1:5112/game", currentUrl);
+    }
+
+    [Test]
+    public void HomeIndex_InputName_DisplaysNameOnGamePage()
+    {
+        driver.Navigate().GoToUrl("http://127.0.0.1:5112"); 
+        IWebElement nameField = driver.FindElement(By.Id("username"));
+        nameField.SendKeys("Bruce"); 
+        IWebElement submitButton = driver.FindElement(By.Id("submit"));
+        submitButton.Click();
+        IWebElement gameGreeting = driver.FindElement(By.Id("greeting"));
+        string userGreeting = gameGreeting.GetAttribute("innerHTML");
+        Assert.That(userGreeting, Does.Contain("Bruce"));
     }
 }
