@@ -3,6 +3,7 @@ using System;
 using LetterMatch.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LetterMatch.Migrations
 {
     [DbContext(typeof(LetterMatchDbContext))]
-    partial class LetterMatchDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220824140106_CreatePlayersTable")]
+    partial class CreatePlayersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
