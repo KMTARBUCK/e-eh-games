@@ -15,6 +15,22 @@ public class GameController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+      string resultInfo = HttpContext.Request.Query["result"];
+      switch(resultInfo) 
+      {
+        case "missing":
+          ViewBag.Message = "Select a pair and click play!";
+          break;
+        case "correct":
+          ViewBag.Message = "Well done!";
+          break;
+        case "incorrect":
+          ViewBag.Message = "Try again!";
+          break;
+        case "oops":
+          ViewBag.Message = "Oops! Something went wrong!";
+          break;
+      }
       //string[] statusArray = {"complete", "incomplete", "complete", "incomplete", "complete"};
       //HttpContext.Session.SetString[]("wordStatuses", statusArray);
       GameBuilder newWord = new GameBuilder();
@@ -75,29 +91,30 @@ public class GameController : Controller
         */
 
 
-// [Route("/signin")]
-//     [HttpGet]
-//     public IActionResult New()
-//     {
-//       string errorInfo = HttpContext.Request.Query["result"];
-//       switch(errorInfo) 
-//       {
-//         case "missing":
-//           ViewBag.Message = "Please fill in all input fields.";
-//           break;
-//         case "correct":
-//           ViewBag.Message = "Account created successfully! Sign in to access your account.";
-//           break;
-//         case "incorrect":
-//           ViewBag.Message = "An account with this email address does not exist. Please try again.";
-//           break;
-//         case "oops":
-//           ViewBag.Message = "An account with this email address does not exist. Please try again.";
-//           break;
-//       }
-//       ViewBag.Username = HttpContext.Session.GetString("username");
-//       ViewBag.status = ValidCheck.CheckStatus(HttpContext.Session.GetString("user_id"));
-//       return View();
+    // [Route("/game")]
+    // [HttpGet]
+    // public IActionResult New()
+    // {
+    //   string resultInfo = HttpContext.Request.Query["result"];
+    //   switch(resultInfo) 
+    //   {
+    //     case "missing":
+    //       ViewBag.Message = "Select a pair and click play!";
+    //       break;
+    //     case "correct":
+    //       ViewBag.Message = "Well done!";
+    //       break;
+    //     case "incorrect":
+    //       ViewBag.Message = "Try again!";
+    //       break;
+    //     case "oops":
+    //       ViewBag.Message = "Oops! Something went wrong!";
+    //       break;
+    //   }
+
+    //   // ViewBag.status = WordChecker.Check(HttpContext.Session.GetString("user_id"));
+    //   return View();
+    // }
 
 
 
