@@ -55,6 +55,14 @@ public class GameController : Controller
     {
       return new RedirectResult("/game");
     }
+
+    [Route("/newplayer")]
+    [HttpPost]
+    public RedirectResult NewPlayer()
+    {
+      //Set up session
+      return new RedirectResult("/game");
+    }
     
     /*Side-note: we could try returning the View directly instead of
         the RedirectResult, as we could then keep the values and be able
