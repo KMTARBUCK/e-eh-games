@@ -17,7 +17,16 @@ public class GameController : Controller
     public IActionResult Index()
     {
         GameBuilder newWord = new GameBuilder();
-        string[] wordArray = {"maker", "TaSkS", "Plays", "Apply", "ReacT"};
+        // string[] wordArray = {"maker", "TaSkS", "Plays", "Apply", "ReacT"};
+
+      LetterMatchDbContext dbContext = new LetterMatchDbContext();
+    //   string[] games = dbContext.Games.First(game.Words);
+        Game level1 = dbContext.Games.Where(level => level.Level == 1).First();
+        string[] wordArray = level1.Words;
+        System.Console.WriteLine(wordArray);
+
+
+
         WordCombo[] wordCombos = newWord.Setup(wordArray);
         ViewBag.wordCombos = wordCombos;
         return View();
