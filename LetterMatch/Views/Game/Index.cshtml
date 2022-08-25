@@ -1,41 +1,59 @@
-<h1 style="text-align: center;" class="title">P w o</h1>
-<h6 id="message" style="color:grey">@ViewBag.Message</h6>
-
-<form style="display: grid; grid-template-rows: 90% 10%; height: 60vh" action="/game" method="post">
-  <div style="display: grid; grid-template-columns: 50% 50%; text-align: center;">
-    <div id="incompleteWordsList" style="display: grid; grid-template-rows: auto auto auto auto auto">
-      @foreach(WordCombo combo in ViewBag.wordCombos)
-      {
-        <div class="@combo.Status button">
-          <input class="check incompleteWord" hidden="true" type="radio" id="@combo.IncompleteWord+@combo.FullWord" name="incompleteWord" value="@combo.FullWord">
-          <label for="@combo.IncompleteWord+@combo.FullWord">@combo.IncompleteWord</label>
-        </div>
-      }
+@{
+    ViewData["Title"] = "Game";
+}
+<br>
+<h1 style="text-align: center;" class="title">Word-In-Progress</h1>
+@if(ViewBag.levelComplete == true)
+{
+  <h4 style="color: grey; text-align: center;" class="level">Level @ViewBag.currentLevel Complete!</h4>
+  <form style="width: 100%; text-align: center" action="/youwin" method="post">
+    <input class="nextButton" type="submit" value="NEXT LEVEL!"/>
+  </form>
+}
+else
+{
+  <h4 style="text-align: center;" class="level level_@ViewBag.currentLevel">Level @ViewBag.currentLevel</h4>
+  <form style="display: grid; grid-template-rows: 80% 20%; height: 60vh" action="/game" method="post">
+    <div style="display: grid; grid-template-columns: 50% 50%; text-align: center;">
+      <div id="incompleteWordsList" style="display: grid; grid-template-rows: auto auto auto auto auto; padding-right: -30%;">
+        @foreach(WordCombo combo in ViewBag.wordCombos)
+        {
+          <div class="@combo.Status button">
+            <input class="@combo.Status check incompleteWord" hidden="true" type="radio" id="@combo.IncompleteWord+@combo.FullWord" name="incompleteWord" value="@combo.FullWord">
+            <label for="@combo.IncompleteWord+@combo.FullWord">@combo.IncompleteWord</label>
+          </div>
+        }
+      </div>
+      <div id="missingLettersList" style="display: grid; grid-template-rows: auto auto auto auto auto; padding-left: -30%;">
+        @foreach(WordCombo combo in ViewBag.wordCombos)
+        {
+          <div class="@combo.Status button">
+            <input class="@combo.Status check missingLetters" hidden="true" type="radio" id="@combo.MissingLetters+@combo.FullWord" name="missingLetters" value="@combo.FullWord">
+            <label for="@combo.MissingLetters+@combo.FullWord">@combo.MissingLetters</label>
+          </div>
+        }
+      </div> 
     </div>
-    <div id="missingLettersList" style="display: grid; grid-template-rows: auto auto auto auto auto;">
-      @foreach(WordCombo combo in ViewBag.wordCombos)
-      {
-        <div class="@combo.Status button">
-          <input class="check missingLetters" hidden="true" type="radio" id="@combo.MissingLetters+@combo.FullWord" name="missingLetters" value="@combo.FullWord">
-          <label for="@combo.MissingLetters+@combo.FullWord">@combo.MissingLetters</label>
-        </div>
-      }
-    </div> 
-  </div>
-  <input style="margin-left: auto; margin-right: auto; width: 20%" type="submit" id="play" value="PLAY"/>
-</form>
-<form style="width: 100%; text-align: center" action="/youwin" method="post">
-  <input type="submit" value="Next level!"/>
-</form>
-
+    <input class="playButton" style="margin-left: auto; margin-right: auto" type="submit" id="play" value="PLAY"/>
+  </form>
+  <br>
+  <h6 class="message" id="message" style="text-align: center;">@ViewBag.Message</h6>
+}
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     shuffleMissingLetters();
+    disableCorrectButtons();
   });
   function shuffleMissingLetters() {
     var list = document.querySelector("#missingLettersList");
     for (var i = list.children.length; i >= 0; i--) {
-        list.appendChild(list.children[Math.random() * i | 0]);
+      list.appendChild(list.children[Math.random() * i | 0]);
+    }
+  }
+  function disableCorrectButtons() {
+    var rButtons = document.querySelectorAll(".correct.check");
+    for (var i = 0; i < rButtons.length; i++) {
+      rButtons[i].disabled = 'true';
     }
   }
 </script>

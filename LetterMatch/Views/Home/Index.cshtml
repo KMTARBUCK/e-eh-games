@@ -1,8 +1,12 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
+<h1 style="text-align: center;" class="homeTitle">Word-In-Progress</h1>
+<h3 style="text-align: center;" class="homeSubtitle">A word-pairing challenge by E Eh Games</h3>
 
-<form action="/newplayer" method="post">
-    <input class="inputform" type="textfield" id="username" name="playerName" placeholder="Name">
-    <input class="btn btn-dark" type="submit" id="submit" value="PLAY GAME">
+<form style="display: grid; grid-template-rows: 50% 50%; text-align: center;" action="/newplayer" method="post">
+    <input style="text-align: center; margin-left: auto; margin-right: auto" class="inputform nameForm" type="textfield" id="username" name="playerName" placeholder="Enter Player Name...">
+    <input style="margin-left: auto; margin-right: auto" class="startButton" type="submit" id="submit" value="START">
 </form>
+
+<h5 class="startMessage" style="text-align: center;"><i>@ViewBag.Message</i></h5>

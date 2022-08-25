@@ -13,9 +13,14 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [Route("/")]
+    [HttpGet]
     public IActionResult Index()
     {
-        return View();
+      if(HttpContext.Request.Query["name"] == "missing"){
+        ViewBag.message = "Please provide a Player Name to get started!";
+      }
+      return View();
     }
 
     public IActionResult Privacy()
