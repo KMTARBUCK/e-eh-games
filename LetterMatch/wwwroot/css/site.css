@@ -20,19 +20,122 @@ body {
 .button label {
   display: inline-block; 
   border: none; 
-  background-color: #bab8b8;
-  padding: 10px;
-  border-radius: 20px;
-  width: 120px;
+  background-color: #C3C3D5;
+  color: black;
+  padding: 15px;
+  border-radius: 50px;
+  height: 54px;
+  width: 160px;
   text-align: center;
+  transition: background-color 0.15s ease, color 0.05s ease;
+  font-weight: bolder;
+}
+
+.playButton {
+  display: inline-block; 
+  border: none; 
+  background-color: #007CBE;
+  color: white;
+  padding: 5px;
+  height: 54px;
+  border-radius: 50px;
+  width: 200px;
+  text-align: center;
+  font-size: 22px;
   transition: background-color 0.1s ease;
+  font-weight: bolder;
+}
+
+.nextButton {
+  display: inline-block;
+  border: none;
+  background-color: #00AF54;
+  color: white;
+  padding: 5px;
+  height: 54px;
+  border-radius: 50px;
+  width: 240px;
+  text-align: center;
+  font-size: 22px;
+  transition: background-color 0.1s ease;
+  font-weight: bolder;
+  margin-top: 40px;
+}
+
+.startButton {
+  display: inline-block; 
+  border: none; 
+  background-color: #007CBE;
+  color: white;
+  padding: 5px;
+  height: 80px;
+  border-radius: 50px;
+  width: 400px;
+  text-align: center;
+  font-size: 40px;
+  transition: background-color 0.1s ease;
+  font-weight: bolder;
+  margin-top: 40px;
+}
+
+.homeTitle {
+  font-size: 80px;
+  font-weight: bolder;
+  margin: 40px;
 }
 
 .correct label {
-  background-color: green;
-  color: white;
+  background-color: #00AF54;
+  color: #EBFFF4;
 }
 
 .check:checked + label { 
-  background-color: #fcc968;
+  background-color: #FBAF00;
+  color: white;
+}
+
+.incomplete:hover + label {
+  cursor: pointer;
+}
+
+.nameForm {
+  border: none;
+  border-bottom: 2px solid #007CBE;
+  height: 50px;
+  margin-top: 40px;
+  width: 300px;
+}
+
+.message {
+  color: #C3C3D5;
+  margin-bottom: 40px;
+}
+
+.startMessage {
+  margin-top: 60px;
+  color: #C3C3D5;
+}
+
+.level_1 {
+  color: #00AF54;
+}
+
+.level_2 {
+  color: #7dd025;
+}
+
+.level_3 {
+  color: #FFD639;
+}
+
+.level_4 {
+  color: #FBAF00;
+}
+
+.level_5 {
+  color: #fb6900;
+}
+
+.level_6 {
+  color: #fb004b;
 }

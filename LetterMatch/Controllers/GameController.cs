@@ -45,8 +45,17 @@ public class GameController : Controller
         _cache.Set("wordComboOrder", wordCombos);
         HttpContext.Session.SetString("status", "running");
       }
+      ViewBag.currentLevel = setLevel.Level;
       ViewBag.playerName = HttpContext.Session.GetString("player");
-      ViewBag.wordCombos = _cache.Get("wordComboOrder");
+      WordCombo[] comboArray = _cache.Get("wordComboOrder") as WordCombo[];
+      if(comboArray.All( combo => combo.Status == "correct" ))
+      {
+        ViewBag.levelComplete = true;
+      }
+      else
+      {
+        ViewBag.wordCombos = comboArray;
+      }
       return View();
     }
 
@@ -89,6 +98,17 @@ public class GameController : Controller
       return new RedirectResult("/game");
     }
 
+    [Route("/accessgame")]
+    [HttpGet]
+    public RedirectResult AccessGame()
+    {
+      if(HttpContext.Session.GetInt32("player_id") == null)
+      {
+        return new RedirectResult("/?name=missing");
+      }
+      return new RedirectResult("/game");
+    }
+
     [Route("/newplayer")]
     [HttpPost]
     public RedirectResult NewPlayer(string playerName)
@@ -98,15 +118,24 @@ public class GameController : Controller
       {
         return new RedirectResult("/?name=missing");
       }
-      Player newplayer = new Player();
-      newplayer.Name = playerName;
-      newplayer.CurrentLevel = 1;
       LetterMatchDbContext dbContext = new LetterMatchDbContext();
-      dbContext.Players.Add(newplayer);
-      dbContext.SaveChanges();
-      HttpContext.Session.SetString("player", newplayer.Name);
-      HttpContext.Session.SetInt32("player_id", newplayer.Id);
       HttpContext.Session.SetString("status", "requires_setup");
+      IQueryable<Player> checkIfExists = dbContext.Players.Where(player => player.Name == playerName);
+      if(!checkIfExists.Any())
+      {
+        Player newplayer = new Player();
+        newplayer.Name = playerName;
+        newplayer.CurrentLevel = 1;
+        dbContext.Players.Add(newplayer);
+        dbContext.SaveChanges();
+        HttpContext.Session.SetString("player", newplayer.Name);
+        HttpContext.Session.SetInt32("player_id", newplayer.Id);
+      }
+      else{
+        Player? player = dbContext.Players.Where(player => player.Name == playerName).First();
+        HttpContext.Session.SetString("player", player.Name);
+        HttpContext.Session.SetInt32("player_id", player.Id);
+      }
       return new RedirectResult("/game");
     }
 
